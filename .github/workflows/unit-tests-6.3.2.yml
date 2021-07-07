@@ -1,0 +1,36 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: dockware/play:6.3.5.0
+    steps:
+      - name: Where Are we?
+        run: 'docker ps'
+      
+      - name: Workspace
+        run: echo $GITHUB_WORKSPACE
+      
+      - name: Show Workspace
+        run: cd $GITHUB_WORKSPACE && ls -la 
+
+      - name: List plugins
+        run: 'php bin/console plugin:refresh'
+      
+    # - name: Install dependencies
+    #  if: steps.composer-cache.outputs.cache-hit != 'true'
+    #  run: composer install --prefer-dist --no-progress --no-suggest
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    # - name: Run test suite
+    #   run: composer run-script test
+
